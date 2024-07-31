@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "./ui/table";
 import { Button } from "./ui/button";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogClose } from "./ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "./ui/dialog";
 import { Progress } from "./ui/progress";
-import { X } from 'lucide-react';
 import { summaries } from '../data/summaries';
 
 const GoalTable = () => {
@@ -74,14 +73,9 @@ const GoalTable = () => {
         </Table>
       </div>
       <Dialog open={!!selectedSummary} onOpenChange={() => setSelectedSummary(null)}>
-        <DialogContent className="bg-white p-4 sm:p-6 rounded-lg w-[90vw] sm:max-w-md mx-auto max-h-[90vh] overflow-hidden flex flex-col">
-          <DialogHeader className="flex justify-between items-start mb-4">
-            <DialogTitle className="text-lg sm:text-xl font-bold">Summary for Day {selectedSummary?.day}</DialogTitle>
-            <DialogClose asChild>
-              <Button variant="ghost" size="icon" className="h-8 w-8 sm:h-10 sm:w-10">
-                <X className="h-4 w-4 sm:h-5 sm:w-5" />
-              </Button>
-            </DialogClose>
+        <DialogContent className="bg-white p-6 rounded-lg w-[90vw] sm:max-w-md mx-auto max-h-[80vh] my-8 overflow-hidden flex flex-col">
+          <DialogHeader className="mb-4">
+            <DialogTitle className="text-xl font-bold">Summary for Day {selectedSummary?.day}</DialogTitle>
           </DialogHeader>
           <DialogDescription className="text-sm text-gray-600 overflow-y-auto flex-grow pr-2">
             <div className="whitespace-pre-wrap">
