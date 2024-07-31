@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "./ui/table";
 import { Button } from "./ui/button";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "./ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogClose } from "./ui/dialog";
 import { Progress } from "./ui/progress";
+import { X } from 'lucide-react';
 import { summaries } from '../data/summaries';
 
 const GoalTable = () => {
@@ -33,48 +34,60 @@ const GoalTable = () => {
   ];
 
   return (
-    <div className="goal-table">
+    <div className="goal-table p-4 max-w-full overflow-x-auto">
       <h2 className="text-2xl font-bold mb-4">Intensive Reading Plan</h2>
       <div className="mb-4">
         <Progress value={progress} className="w-full" />
         <p className="text-sm text-gray-600 mt-1">{completedSummaries} of 19 summaries completed</p>
       </div>
-      <Table>
-        <TableHeader>
-          <TableRow>
-            <TableHead>Day</TableHead>
-            <TableHead>Pages</TableHead>
-            <TableHead>Focus</TableHead>
-            <TableHead>Summary</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {goals.map((goal) => (
-            <TableRow key={goal.day}>
-              <TableCell>{goal.day}</TableCell>
-              <TableCell>{goal.pages}</TableCell>
-              <TableCell>{goal.focus}</TableCell>
-              <TableCell>
-                {summaries[goal.day] ? (
-                  <Button onClick={() => setSelectedSummary({day: goal.day, content: summaries[goal.day]})}>
-                    View Summary
-                  </Button>
-                ) : (
-                  <span className="text-gray-400">Not yet available</span>
-                )}
-              </TableCell>
+      <div className="overflow-x-auto">
+        <Table className="min-w-full">
+          <TableHeader>
+            <TableRow>
+              <TableHead className="w-16 sm:w-20">Day</TableHead>
+              <TableHead className="w-24 sm:w-32">Pages</TableHead>
+              <TableHead className="hidden sm:table-cell">Focus</TableHead>
+              <TableHead className="w-28 sm:w-32">Summary</TableHead>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+          </TableHeader>
+          <TableBody>
+            {goals.map((goal) => (
+              <TableRow key={goal.day}>
+                <TableCell>{goal.day}</TableCell>
+                <TableCell>{goal.pages}</TableCell>
+                <TableCell className="hidden sm:table-cell">{goal.focus}</TableCell>
+                <TableCell>
+                  {summaries[goal.day] ? (
+                    <Button 
+                      onClick={() => setSelectedSummary({day: goal.day, content: summaries[goal.day]})}
+                      className="w-full sm:w-auto"
+                    >
+                      View
+                    </Button>
+                  ) : (
+                    <span className="text-gray-400 text-sm">Not available</span>
+                  )}
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </div>
       <Dialog open={!!selectedSummary} onOpenChange={() => setSelectedSummary(null)}>
-        <DialogContent className="bg-white p-6 rounded-lg max-w-md mx-auto">
-          <DialogHeader>
-            <DialogTitle className="text-xl font-bold mb-2">Summary for Day {selectedSummary?.day}</DialogTitle>
-            <DialogDescription className="text-sm text-gray-600 whitespace-pre-wrap">
-              {selectedSummary?.content}
-            </DialogDescription>
+        <DialogContent className="bg-white p-4 sm:p-6 rounded-lg w-[90vw] sm:max-w-md mx-auto max-h-[90vh] overflow-hidden flex flex-col">
+          <DialogHeader className="flex justify-between items-start mb-4">
+            <DialogTitle className="text-lg sm:text-xl font-bold">Summary for Day {selectedSummary?.day}</DialogTitle>
+            <DialogClose asChild>
+              <Button variant="ghost" size="icon" className="h-8 w-8 sm:h-10 sm:w-10">
+                <X className="h-4 w-4 sm:h-5 sm:w-5" />
+              </Button>
+            </DialogClose>
           </DialogHeader>
+          <DialogDescription className="text-sm text-gray-600 overflow-y-auto flex-grow pr-2">
+            <div className="whitespace-pre-wrap">
+              {selectedSummary?.content}
+            </div>
+          </DialogDescription>
         </DialogContent>
       </Dialog>
     </div>
