@@ -62,7 +62,7 @@ const GoalTable = () => {
                       onClick={() => setSelectedSummary({day: goal.day, content: summaries[goal.day]})}
                       className="w-full sm:w-auto"
                     >
-                      View
+                      View Summary
                     </Button>
                   ) : (
                     <span className="text-gray-400 text-sm">Not available</span>
