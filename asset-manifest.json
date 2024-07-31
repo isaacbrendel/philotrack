@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/philotrack/static/css/main.9cbf631e.css",
-    "main.js": "/philotrack/static/js/main.df0418e1.js",
+    "main.js": "/philotrack/static/js/main.d334a0f8.js",
     "index.html": "/philotrack/index.html",
     "main.9cbf631e.css.map": "/philotrack/static/css/main.9cbf631e.css.map",
-    "main.df0418e1.js.map": "/philotrack/static/js/main.df0418e1.js.map"
+    "main.d334a0f8.js.map": "/philotrack/static/js/main.d334a0f8.js.map"
   },
   "entrypoints": [
     "static/css/main.9cbf631e.css",
-    "static/js/main.df0418e1.js"
+    "static/js/main.d334a0f8.js"
   ]
 }
