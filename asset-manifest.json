@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/philotrack/static/css/main.5cc9b3c9.css",
+    "main.js": "/philotrack/static/js/main.02f2bf72.js",
+    "index.html": "/philotrack/index.html",
+    "main.5cc9b3c9.css.map": "/philotrack/static/css/main.5cc9b3c9.css.map",
+    "main.02f2bf72.js.map": "/philotrack/static/js/main.02f2bf72.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.5cc9b3c9.css",
+    "static/js/main.02f2bf72.js"
+  ]
+}
