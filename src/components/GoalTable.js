@@ -1,10 +1,14 @@
 import React, { useState } from 'react';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../components/ui/table";
-import { Button } from "../components/ui/button";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "../components/ui/dialog";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "./ui/table";
+import { Button } from "./ui/button";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "./ui/dialog";
+import { Progress } from "./ui/progress";
+import { summaries } from '../data/summaries';
 
-const GoalTable = ({ summaries }) => {
+const GoalTable = () => {
   const [selectedSummary, setSelectedSummary] = useState(null);
+  const completedSummaries = Object.values(summaries).filter(summary => summary.length > 0).length;
+  const progress = (completedSummaries / 19) * 100;
 
   const goals = [
     { day: 1, pages: "1-50", focus: "The Pre-Socratics" },
@@ -30,40 +34,46 @@ const GoalTable = ({ summaries }) => {
 
   return (
     <div className="goal-table">
-      <h2>Intensive Reading Plan</h2>
+      <h2 className="text-2xl font-bold mb-4">Intensive Reading Plan</h2>
+      <div className="mb-4">
+        <Progress value={progress} className="w-full" />
+        <p className="text-sm text-gray-600 mt-1">{completedSummaries} of 19 summaries completed</p>
+      </div>
       <Table>
-        <thead>
-          <tr>
-            <th>Day</th>
-            <th>Pages</th>
-            <th>Focus</th>
-            <th>Summary</th>
-          </tr>
-        </thead>
-        <tbody>
+        <TableHeader>
+          <TableRow>
+            <TableHead>Day</TableHead>
+            <TableHead>Pages</TableHead>
+            <TableHead>Focus</TableHead>
+            <TableHead>Summary</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
           {goals.map((goal) => (
-            <tr key={goal.day}>
-              <td>{goal.day}</td>
-              <td>{goal.pages}</td>
-              <td>{goal.focus}</td>
-              <td>
+            <TableRow key={goal.day}>
+              <TableCell>{goal.day}</TableCell>
+              <TableCell>{goal.pages}</TableCell>
+              <TableCell>{goal.focus}</TableCell>
+              <TableCell>
                 {summaries[goal.day] ? (
-                  <Button onClick={() => setSelectedSummary(summaries[goal.day])}>
+                  <Button onClick={() => setSelectedSummary({day: goal.day, content: summaries[goal.day]})}>
                     View Summary
                   </Button>
                 ) : (
-                  <span className="summary-unavailable">Not yet available</span>
+                  <span className="text-gray-400">Not yet available</span>
                 )}
-              </td>
-            </tr>
+              </TableCell>
+            </TableRow>
           ))}
-        </tbody>
+        </TableBody>
       </Table>
       <Dialog open={!!selectedSummary} onOpenChange={() => setSelectedSummary(null)}>
-        <DialogContent>
+        <DialogContent className="bg-white p-6 rounded-lg max-w-md mx-auto">
           <DialogHeader>
-            <DialogTitle>Summary</DialogTitle>
-            <DialogDescription>{selectedSummary}</DialogDescription>
+            <DialogTitle className="text-xl font-bold mb-2">Summary for Day {selectedSummary?.day}</DialogTitle>
+            <DialogDescription className="text-sm text-gray-600 whitespace-pre-wrap">
+              {selectedSummary?.content}
+            </DialogDescription>
           </DialogHeader>
         </DialogContent>
       </Dialog>
